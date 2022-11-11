@@ -1,7 +1,9 @@
 {
   "size": 500,
-  "square_line": 10,
-  "color": "black",
-  "color2": "ivory",
+  "resolution": [500, 500],
+  "square_line": 9,
+  "pawn_color": ["white", "black"],
+  "pawn_size": 300,
+  "checkboard_color": ["brown", "ivory"],
   "version": "MVP | DEMO"
 }
