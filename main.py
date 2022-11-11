@@ -10,4 +10,3 @@ if __name__ == "__main__":
     Checkboard().draw(can)
     Items().draw(can)
     main.mainloop()
-    Canvas.create_oval(0,0,50,50)
