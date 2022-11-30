@@ -28,12 +28,25 @@ def modifierboard(coorinitial, coorfinale):
     y1 = coorinitial[0]
     x2 = coorfinale[1]
     y2 = coorfinale[0]
-    valeur1 = board[x1][y1]
-    if coorinitial[1] == coorfinale[1] - 1:
+    print(coorinitial)
+    print(coorfinale)
+    valeur1 = str(board[x1][y1])
+    pionennemi1 = board[x1 - 1][y1 + 1]
+    pionennemi2 = board[x1 + 1][y1 + 1]
+    if valeur1 == 'pb':
+        if x1 == x2 - 1:
+            board[x1][y1] = '--'
+            board[x2][y2] = str(valeur1)
+        if x1 == x2 - 2 and y1 == y2 + 2 or x1 == x2 - 2 and y1 == y2 - 2:
+            board[x1][y1] = '--'
+            board[x2][y2] = str(valeur1)
+    else:
+        if x1 == x2 + 1:
+            board[x1][y1] = '--'
+            board[x2][y2] = str(valeur1)
+    if x1 == x2 + 2 and y1 == y2 + 2 or x1 == x2 + 2 and y1 == y2 - 2:
         board[x1][y1] = '--'
         board[x2][y2] = str(valeur1)
-    else:
-        print("erreur")
     return dessinerplateau()
 
 
