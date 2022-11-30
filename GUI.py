@@ -1,6 +1,4 @@
 import sys
-
-import pygame
 import pygame as pg
 
 height = 800
@@ -25,6 +23,20 @@ def bas(mouse_pos):
     return mouse_pos[0], mouse_pos[1] + size
 
 
+def modifierboard(coorinitial, coorfinale):
+    x1 = coorinitial[1]
+    y1 = coorinitial[0]
+    x2 = coorfinale[1]
+    y2 = coorfinale[0]
+    valeur1 = board[x1][y1]
+    if coorinitial[1] == coorfinale[1] - 1:
+        board[x1][y1] = '--'
+        board[x2][y2] = str(valeur1)
+    else:
+        print("erreur")
+    return dessinerplateau()
+
+
 def chargement():
     images = ["pb", "pn"]
     image_charge = {}
@@ -35,8 +47,8 @@ def chargement():
 
 def dessinerplateau():
     couleurs = [pg.Color("white"), pg.Color("black")]
-    for i in range(width):
-        for j in range(width):
+    for i in range(10):
+        for j in range(10):
             couleur = couleurs[((i + j) % 2)]
             pg.draw.rect(screen, couleur, pg.Rect(i * size, j * size, size, size))
 
@@ -58,11 +70,28 @@ def dessinerstatut(board, img):
 def main():
     clock = pg.time.Clock()
     img = chargement()
+    clickjoueur = []
+    carreselectionne = ()
     game = True
     while game:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 game = False
+            if event.type == pg.MOUSEBUTTONDOWN:
+                click = pg.mouse.get_pos()
+                row = click[0] // size
+                col = click[1] // size
+                if carreselectionne == (row, col):
+                    carreselectionne = ()
+                    clickjoueur = []
+                else:
+                    carreselectionne = (row, col)
+                    clickjoueur.append(carreselectionne)
+                if len(clickjoueur) == 2:
+                    modifierboard(clickjoueur[0], clickjoueur[1])
+                    carreselectionne = ()
+                    clickjoueur = []
+
         dessinerstatut(board, img)
         pg.display.flip()
         clock.tick(15)
