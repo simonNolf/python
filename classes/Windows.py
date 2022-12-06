@@ -1,13 +1,16 @@
-from tkinter import Tk
+from pygame import display, image
 
-
-class Window:
-    def __init__(self, config_file="config.json"):
-        pass
+class Screen:
+    def __init__(self, size):
+        self.screen = display
+        self.size = size
 
     @property
-    def create(self):
-        return Tk()
+    def set_screen(self):
+        return self.screen.set_mode((self.size, self.size))
 
-    def rename(self, window, sentence):
-        return window.title(sentence)
+    def set_name(self, title):
+        return self.screen.set_caption(f"{title}")
+
+    def set_picture(self, path='pictures/pn.png'):
+        return self.screen.set_icon(image.load(f"{path}"))

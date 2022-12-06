@@ -1,12 +1,10 @@
-from classes.Checkboard import *
-from classes.Items import *
-from classes.Windows import *
-from classes.usefull_functions import *
+from classes.Windows import Screen
+from classes.Checkboard import Checkboard
+from classes.usefull_functions import get_data
 
-if __name__ == "__main__":
-    main = Window().create
-    Window().rename(main, f'Jeu de dame - {get_data("version")}')
-    can = Checkboard().create(main)
-    Checkboard().draw(can)
-    Items().draw(can)
-    main.mainloop()
+if __name__ == '__main__':
+    main = Screen(get_data("checkboard", "config.json")["size"])
+    main.set_name("Bienvenue sur PyDames")
+    main.set_picture()
+    check_board = Checkboard(main)
+    check_board.run
