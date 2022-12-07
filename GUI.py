@@ -31,8 +31,6 @@ def modifierboard(coorinitial, coorfinale):
     print(coorinitial)
     print(coorfinale)
     valeur1 = str(board[x1][y1])
-    pionennemi1 = board[x1 - 1][y1 + 1]
-    pionennemi2 = board[x1 + 1][y1 + 1]
     if valeur1 == 'pb':
         if x1 == x2 - 1:
             board[x1][y1] = '--'
@@ -101,13 +99,26 @@ def main():
                     carreselectionne = (row, col)
                     clickjoueur.append(carreselectionne)
                 if len(clickjoueur) == 2:
-                    modifierboard(clickjoueur[0], clickjoueur[1])
+                    if remove_pawn(clickjoueur[1], clickjoueur[0], board):
+                        modifierboard(clickjoueur[0], clickjoueur[1])
+                    else:
+                        print("Mouvement non autorisé")
                     carreselectionne = ()
                     clickjoueur = []
 
         dessinerstatut(board, img)
         pg.display.flip()
         clock.tick(15)
+
+
+def remove_pawn(target, attacker, the_board):
+    if attacker[0] != target[0] and attacker[1] != target[1] and the_board[target[1]][target[0]] in ["pb", "pn"]:
+        the_board[target[1]][target[0]] == "--"
+        return True
+    elif attacker[0] == target[0] and the_board[target[1]][target[0]] in ["pb", "pn"]:
+        return False
+    else:
+        return True
 
 
 if __name__ == '__main__':
