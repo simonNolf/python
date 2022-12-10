@@ -27,9 +27,9 @@ def compter_pions():
     pions_blancs = 0
     pions_noirs = 0
     for i in range(len(board)):
-        valeur_blanc = board[i].count(("pb"))
+        valeur_blanc = board[i].count("pb")
         pions_blancs += valeur_blanc
-        valeur_noir = board[i].count(("pn"))
+        valeur_noir = board[i].count("pn")
         pions_noirs += valeur_noir
     score.append(pions_blancs)
     score.append(pions_noirs)
@@ -64,8 +64,8 @@ def modifierboard(coorinitial, coorfinale):
     x2 = coorfinale[1]
     y2 = coorfinale[0]
     valeur1 = str(board[x1][y1])
-    pionennemi1 = board[x1 + 1][y1 - 1]
-    pionennemi2 = board[x1 + 1][y1 + 1]
+    # pionennemi1 = board[x1 + 1][y1 - 1]
+    # pionennemi2 = board[x1 + 1][y1 + 1]
     if valeur1 == 'pb':
         if x1 == x2 - 1:
             board[x1][y1] = '--'
@@ -110,16 +110,52 @@ def dessinerpiece(board, img):
 
 
 def dessinerstatut(board, img):
-    dessinerplateau()
+    # dessinerplateau()
     dessinerpiece(board, img)
     ecrire_score(textX, texteY)
 
 
+def affichercouleur():
+    mousepos = pg.mouse.get_pos()
+    col = mousepos[0] // size
+    row = mousepos[1] // size
+
+    rect = pg.Rect(col * size, row * size, size, size)
+    pg.draw.rect(screen, (200, 50, 0), rect)
+
+    if board[row][col] == "pb":
+        if board[row + 1][col - 1] == "pn" and board[row + 2][col - 2] == "--":
+            rect = pg.Rect(col * size - 2 * size, row * size + 2 * size, size, size)
+            pg.draw.rect(screen, (0, 200, 55), rect)
+
+        if board[row + 1][col + 1] == "pn" and board[row + 2][col + 2] == "--":
+            rect = pg.Rect(col * size + 2 * size, row * size + 2 * size, size, size)
+            pg.draw.rect(screen, (0, 200, 55), rect)
+
+        if board[row + 1][col] == "--":
+            rect = pg.Rect(col * size, row * size + size, size, size)
+            pg.draw.rect(screen, (0, 200, 55), rect)
+
+    if board[row][col] == "pn":
+        if board[row - 1][col + 1] == "pb" and board[row - 2][col + 2] == "--":
+            rect = pg.Rect(col * size + 2 * size, row * size - 2 * size, size, size)
+            pg.draw.rect(screen, (0, 200, 55), rect)
+
+        if board[row - 1][col - 1] == "pb" and board[row - 2][col - 2] == "--":
+            rect = pg.Rect(col * size - 2 * size, row * size - 2 * size, size, size)
+            pg.draw.rect(screen, (0, 200, 55), rect)
+
+        if board[row - 1][col] == "--":
+            rect = pg.Rect(col * size, row * size - size, size, size)
+            pg.draw.rect(screen, (0, 200, 55), rect)
+
+
 def main():
+    dessinerplateau()
     clock = pg.time.Clock()
     img = chargement()
     clickjoueur = []
-    carreselectionne = ()
+    # carreselectionne = ()
     game = True
     while game:
         for event in pg.event.get():
@@ -129,16 +165,29 @@ def main():
                 click = pg.mouse.get_pos()
                 row = click[0] // size
                 col = click[1] // size
-                if carreselectionne == (row, col):
-                    carreselectionne = ()
-                    clickjoueur = []
-                else:
-                    carreselectionne = (row, col)
-                    clickjoueur.append(carreselectionne)
+                # if carreselectionne == (row, col):
+                #     carreselectionne = ()
+                #     clickjoueur = []
+                # else:
+                #     carreselectionne = (row, col)
+                #     clickjoueur.append(carreselectionne)
+                carreselectionne = (row, col)
+                clickjoueur.append(carreselectionne)
+                if len(clickjoueur) == 1:
+                    print(row, col)
+                    affichercouleur()
+                    # print(clickjoueur)
                 if len(clickjoueur) == 2:
+                    # print(clickjoueur)
                     modifierboard(clickjoueur[0], clickjoueur[1])
-                    carreselectionne = ()
+                    # carreselectionne = ()
                     clickjoueur = []
+                    dessinerplateau()
+
+                    print(row, col)
+                    for item in board:
+                        print(item)
+
         dessinerstatut(board, img)
         pg.display.flip()
         clock.tick(15)
