@@ -3,9 +3,12 @@ import pygame as pg
 
 height = 800
 width = 800
-size = height // 10
+size = 800 // 10
 new_color = (200, 200, 200)
-screen = pg.display.set_mode((800, 800))
+screen = pg.display.set_mode((800, 950))
+
+textX = 50
+texteY = 810
 board = [
     ["--", "pb", "--", "pb", "--", "pb", "--", "pb", "--", "pb"],
     ["pb", "--", "pb", "--", "pb", "--", "pb", "--", "pb", "--"],
@@ -19,8 +22,40 @@ board = [
     ["pn", "--", "pn", "--", "pn", "--", "pn", "--", "pn", "--"]]
 
 
+def compter_pions():
+    score = []
+    pions_blancs = 0
+    pions_noirs = 0
+    for i in range(len(board)):
+        valeur_blanc = board[i].count(("pb"))
+        pions_blancs += valeur_blanc
+        valeur_noir = board[i].count(("pn"))
+        pions_noirs += valeur_noir
+    score.append(pions_blancs)
+    score.append(pions_noirs)
+    return score
+
+
 def bas(mouse_pos):
     return mouse_pos[0], mouse_pos[1] + size
+
+
+def ecrire_score(x, y):
+    a = compter_pions()
+    font = pg.font.Font('StalshineRegular.ttf', 20)
+    scoreblanc = font.render("vous avez " + str(a[0]) + " pions blancs sur le plateau", True, (255, 255, 255))
+    elim_blanc = font.render("vous avez " + str(20 - a[0]) + " pions blancs éliminés", True, (255, 255, 255))
+    if a[0] == 19 or 20:
+        elim_blanc = font.render("vous avez " + str(20 - a[0]) + " pion blanc éliminé", True, (255, 255, 255))
+    screen.blit(scoreblanc, (x, y))
+    screen.blit(elim_blanc, (x, y + 35))
+    scorenoir = font.render("vous avez " + str(a[1]) + " pions noirs sur le plateau", True, (255, 255, 255))
+    screen.blit(scorenoir, (x + 400, y))
+    elim_noir = font.render("vous avez " + str(20 - a[1]) + " pions noirs éliminés", True, (255, 255, 255))
+    if a[1] == 19 or 20:
+        elim_noir = font.render("vous avez " + str(20 - a[1]) + " pion noir éliminé", True, (255, 255, 255))
+    screen.blit(elim_noir, (x + 400, y + 35))
+    pg.display.flip()
 
 
 def modifierboard(coorinitial, coorfinale):
@@ -28,9 +63,9 @@ def modifierboard(coorinitial, coorfinale):
     y1 = coorinitial[0]
     x2 = coorfinale[1]
     y2 = coorfinale[0]
-    print(coorinitial)
-    print(coorfinale)
     valeur1 = str(board[x1][y1])
+    pionennemi1 = board[x1 + 1][y1 - 1]
+    pionennemi2 = board[x1 + 1][y1 + 1]
     if valeur1 == 'pb':
         if x1 == x2 - 1:
             board[x1][y1] = '--'
@@ -57,6 +92,7 @@ def chargement():
 
 
 def dessinerplateau():
+    screen.fill((0, 0, 0))
     couleurs = [pg.Color("white"), pg.Color("black")]
     for i in range(10):
         for j in range(10):
@@ -76,6 +112,7 @@ def dessinerpiece(board, img):
 def dessinerstatut(board, img):
     dessinerplateau()
     dessinerpiece(board, img)
+    ecrire_score(textX, texteY)
 
 
 def main():
@@ -99,31 +136,18 @@ def main():
                     carreselectionne = (row, col)
                     clickjoueur.append(carreselectionne)
                 if len(clickjoueur) == 2:
-                    if remove_pawn(clickjoueur[1], clickjoueur[0], board):
-                        modifierboard(clickjoueur[0], clickjoueur[1])
-                    else:
-                        print("Mouvement non autorisé")
+                    modifierboard(clickjoueur[0], clickjoueur[1])
                     carreselectionne = ()
                     clickjoueur = []
-
         dessinerstatut(board, img)
         pg.display.flip()
         clock.tick(15)
 
 
-def remove_pawn(target, attacker, the_board):
-    if attacker[0] != target[0] and attacker[1] != target[1] and the_board[target[1]][target[0]] in ["pb", "pn"]:
-        the_board[target[1]][target[0]] == "--"
-        return True
-    elif attacker[0] == target[0] and the_board[target[1]][target[0]] in ["pb", "pn"]:
-        return False
-    else:
-        return True
-
-
 if __name__ == '__main__':
     chargement()
     pg.init()
+    pg.font.init()
     main()
     pg.quit()
     sys.exit()
