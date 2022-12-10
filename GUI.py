@@ -120,26 +120,29 @@ def affichercouleur():
     col = mousepos[0] // size
     row = mousepos[1] // size
 
-    rect = pg.Rect(col * size, row * size, size, size)
-    pg.draw.rect(screen, (200, 50, 0), rect)
+    if board[row][col] == "pb" or board[row][col] == "pn":
+        rect = pg.Rect(col * size, row * size, size, size)
+        pg.draw.rect(screen, (200, 50, 0), rect)
 
     if board[row][col] == "pb":
         if board[row + 1][col - 1] == "pn" and board[row + 2][col - 2] == "--":
             rect = pg.Rect(col * size - 2 * size, row * size + 2 * size, size, size)
             pg.draw.rect(screen, (0, 200, 55), rect)
 
-        if board[row + 1][col + 1] == "pn" and board[row + 2][col + 2] == "--":
-            rect = pg.Rect(col * size + 2 * size, row * size + 2 * size, size, size)
-            pg.draw.rect(screen, (0, 200, 55), rect)
+        if board[row][col] != board[row][9]:
+            if board[row + 1][col + 1] == "pn" and board[row + 2][col + 2] == "--":
+                rect = pg.Rect(col * size + 2 * size, row * size + 2 * size, size, size)
+                pg.draw.rect(screen, (0, 200, 55), rect)
 
         if board[row + 1][col] == "--":
             rect = pg.Rect(col * size, row * size + size, size, size)
             pg.draw.rect(screen, (0, 200, 55), rect)
 
     if board[row][col] == "pn":
-        if board[row - 1][col + 1] == "pb" and board[row - 2][col + 2] == "--":
-            rect = pg.Rect(col * size + 2 * size, row * size - 2 * size, size, size)
-            pg.draw.rect(screen, (0, 200, 55), rect)
+        if board[row][col] != board[row][9]:
+            if board[row - 1][col + 1] == "pb" and board[row - 2][col + 2] == "--":
+                rect = pg.Rect(col * size + 2 * size, row * size - 2 * size, size, size)
+                pg.draw.rect(screen, (0, 200, 55), rect)
 
         if board[row - 1][col - 1] == "pb" and board[row - 2][col - 2] == "--":
             rect = pg.Rect(col * size - 2 * size, row * size - 2 * size, size, size)
