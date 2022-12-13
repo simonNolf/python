@@ -1,5 +1,6 @@
 import sys
 import pygame as pg
+from random import randint
 
 height = 800
 width = 800
@@ -63,23 +64,35 @@ def modifierboard(coorinitial, coorfinale):
     y1 = coorinitial[0]
     x2 = coorfinale[1]
     y2 = coorfinale[0]
-    valeur1 = str(board[x1][y1])
-    # pionennemi1 = board[x1 + 1][y1 - 1]
-    # pionennemi2 = board[x1 + 1][y1 + 1]
-    if valeur1 == 'pb':
-        if x1 == x2 - 1:
+
+    pion_init = str(board[x1][y1])
+    cible = str(board[x2][y2])
+
+    if pion_init == 'pb':
+        inter = str(board[x2 - 1][(y1 - 1) if y2 < y1 else (y1 + 1)])
+
+        if x2 == x1 + 1 and y2 == y1 and cible not in ['pn', 'pb']:
             board[x1][y1] = '--'
-            board[x2][y2] = str(valeur1)
-        if x1 == x2 - 2 and y1 == y2 + 2 or x1 == x2 - 2 and y1 == y2 - 2:
+            board[x2][y2] = pion_init
+        elif y2 in range(y1 - 3, y1 + 3) and y2 not in [y1 - 1, y1, y1 + 1] and x2 in range(
+                x1 + 3) and x2 not in [x1 - 1, x1, x1 + 1] and cible == '--' and inter == 'pn':
             board[x1][y1] = '--'
-            board[x2][y2] = str(valeur1)
-    else:
-        if x1 == x2 + 1:
+            board[x2 - 1][(y1 - 1) if y2 < y1 else (y1 + 1)] = '--'
+            board[x2][y2] = pion_init
+    elif pion_init == 'pn':
+        inter = str(board[x2 + 1][(y1 - 1) if y2 < y1 else (y1 + 1)])
+
+        if x2 == x1 - 1 and y2 == y1 and cible not in ['pn', 'pb']:
             board[x1][y1] = '--'
-            board[x2][y2] = str(valeur1)
-    if x1 == x2 + 2 and y1 == y2 + 2 or x1 == x2 + 2 and y1 == y2 - 2:
-        board[x1][y1] = '--'
-        board[x2][y2] = str(valeur1)
+            board[x2][y2] = pion_init
+        elif y2 in range(y1 - 3, y1 + 3) and y2 not in [y1 - 1, y1, y1 + 1] and x2 in range(
+                x1 + 3) and x2 not in [x1 - 1, x1, x1 + 1] and cible == '--' and inter == 'pb':
+            board[x1][y1] = '--'
+            board[x2 + 1][(y1 - 1) if y2 < y1 else (y1 + 1)] = '--'
+            board[x2][y2] = pion_init
+        else:
+            print("dd")
+
     return dessinerplateau()
 
 
