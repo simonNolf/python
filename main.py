@@ -7,9 +7,9 @@ w =  Screen()
 c = Checkboard(w)
 
 if __name__ == "__main__":
-    main = Window().create
-    Window().rename(main, f'Jeu de dame - {get_data("version")}')
-    can = Checkboard().create(main)
-    Checkboard().draw(can)
-    Items().draw(can)
-    main.mainloop()
+    c.loadpawns()
+    pg.init()
+    pg.font.init()
+    c.run()
+    pg.quit()
+    sys.exit()
