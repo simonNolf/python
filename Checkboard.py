@@ -115,7 +115,6 @@ class Checkboard:
             if self.board[x1][y1] != self.board[x1][9]:
                 inter = str(self.board[x2 - 1][(y1 - 1) if y2 < y1 else (y1 + 1)])
 
-
             if x2 == x1 + 1 and y2 == y1 and target not in ['bp', 'wp']:
                 self.board[x1][y1] = '--'
                 self.board[x2][y2] = init_pawn
@@ -182,7 +181,8 @@ class Checkboard:
 
             if self.board[row][col] != self.board[row][9]:
                 if self.board[row + 1][col + 1] == "bp" and self.board[row + 2][col + 2] == "--":
-                    rect = pg.Rect(col * self.size + 2 * self.size, row * self.size + 2 * self.size, self.size, self.size)
+                    rect = pg.Rect(col * self.size + 2 * self.size, row * self.size + 2 * self.size, self.size,
+                                   self.size)
                     pg.draw.rect(self.screen, (0, 200, 55), rect)
 
             if self.board[row + 1][col] == "--":
@@ -192,7 +192,8 @@ class Checkboard:
         if self.board[row][col] == "bp":
             if self.board[row][col] != self.board[row][9]:
                 if self.board[row - 1][col + 1] == "wp" and self.board[row - 2][col + 2] == "--":
-                    rect = pg.Rect(col * self.size + 2 * self.size, row * self.size - 2 * self.size, self.size, self.size)
+                    rect = pg.Rect(col * self.size + 2 * self.size, row * self.size - 2 * self.size, self.size,
+                                   self.size)
                     pg.draw.rect(self.screen, (0, 200, 55), rect)
 
             if self.board[row - 1][col - 1] == "wp" and self.board[row - 2][col - 2] == "--":
