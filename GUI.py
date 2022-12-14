@@ -37,10 +37,6 @@ def compter_pions():
     return score
 
 
-def bas(mouse_pos):
-    return mouse_pos[0], mouse_pos[1] + size
-
-
 def ecrire_score(x, y):
     a = compter_pions()
     font = pg.font.Font('StalshineRegular.ttf', 20)

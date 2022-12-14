@@ -1,5 +1,6 @@
 import pygame as pg
 
+
 class Screen:
     def __init__(self):
         self.__screen = pg.display
@@ -9,6 +10,7 @@ class Screen:
     @property
     def screen(self):
         return self.__screen
+
     @property
     def width(self):
         return self.__width
@@ -24,6 +26,5 @@ class Screen:
     def set_name(self, title):
         return self.screen.set_caption(f"{title}")
 
-    def set_picture(self, path='pictures/pn.png'):
+    def set_picture(self, path='pictures/bp.png'):
         return self.screen.set_icon(pg.image.load(f"{path}"))
-
