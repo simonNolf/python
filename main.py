@@ -3,7 +3,7 @@ from Checkboard import Checkboard
 from Windows import Screen
 import sys
 
-w =  Screen()
+w = Screen()
 c = Checkboard(w)
 
 if __name__ == "__main__":

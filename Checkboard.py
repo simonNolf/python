@@ -112,8 +112,10 @@ class Checkboard:
         target = str(self.board[x2][y2])
 
         if init_pawn == 'wp':
-            if self.board[x1][y1] != self.board[x1][9]:
+            if y1 != len(self.board[x1]) - 1 and x1 != len(self.board) - 1 and x2 != len(self.board) - 1:
                 inter = str(self.board[x2 - 1][(y1 - 1) if y2 < y1 else (y1 + 1)])
+            elif y1 == len(self.board[x1]) - 1:
+                inter = str(self.board[x2 + 1][y1 - 1])
 
             if x2 == x1 + 1 and y2 == y1 and target not in ['bp', 'wp']:
                 self.board[x1][y1] = '--'
@@ -124,8 +126,11 @@ class Checkboard:
                 self.board[x2 - 1][(y1 - 1) if y2 < y1 else (y1 + 1)] = '--'
                 self.board[x2][y2] = init_pawn
         elif init_pawn == 'bp':
-            if self.board[x1][y1] != self.board[x1][9]:
+            if y1 != len(self.board[x1]) - 1 and x1 != len(self.board) - 1 and x2 != len(self.board) - 1:
                 inter = str(self.board[x2 + 1][(y1 - 1) if y2 < y1 else (y1 + 1)])
+            elif y1 == len(self.board[x2]) - 1:
+                inter = str(self.board[x2 + 1][y1 - 1])
+
             if x2 == x1 - 1 and y2 == y1 and target not in ['bp', 'wp']:
                 self.board[x1][y1] = '--'
                 self.board[x2][y2] = init_pawn
@@ -134,6 +139,7 @@ class Checkboard:
                 self.board[x1][y1] = '--'
                 self.board[x2 + 1][(y1 - 1) if y2 < y1 else (y1 + 1)] = '--'
                 self.board[x2][y2] = init_pawn
+
         return self.drawboard()
 
     def countpawns(self):
