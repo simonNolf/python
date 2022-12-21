@@ -5,10 +5,10 @@ window = Screen()
 
 class Checkboard:
     def __init__(self):
-        self.__pictures = ["wp", "bp"]
+        self.__pictures = ["wp", "bp", "wc", "bc"]
         self.__colors = [pg.Color("white"), pg.Color("red")]
         self.square = 10
-        self.__screen = pg.display.set_mode((1100, 800))
+        self.__screen = pg.display.set_mode((1200, 800))
         self.__size = window.width // self.square
         self.__turn = True
         self.__score = {'blancs': 0, 'noirs': 0}
@@ -82,6 +82,7 @@ class Checkboard:
         self.drawpawns(img)
         self.display_score(810, 50)
         self.display_message(810, 350)
+        self.pawn_to_cheek()
 
     def modifyboard(self, coorinitial, coorfinale):
         x1 = coorinitial[1]
@@ -110,7 +111,6 @@ class Checkboard:
                 self.board[x2 - 1][(y1 - 1) if y2 < y1 else (y1 + 1)] = '--'
                 self.board[x2][y2] = init_pawn
                 self.update_score("blancs", 20)
-
             self.changeturn()
 
         elif init_pawn == 'bp' and not self.turn:
@@ -236,3 +236,12 @@ class Checkboard:
             if self.board[row - 1][col] == "--":
                 rect = pg.Rect(col * self.size, row * self.size - self.size, self.size, self.size)
                 pg.draw.rect(self.screen, (0, 200, 55), rect)
+
+    def pawn_to_cheek(self):
+        for i in range(len(self.board[0])):
+            if self.board[0][i] == "bp":
+                self.board[0][i] = "bc"
+        for i in range(len(self.board[9])):
+            if self.board[9][i] == "wp":
+                self.board[9][i] = "wc"
+                print("hi")

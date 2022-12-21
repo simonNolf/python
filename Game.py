@@ -6,28 +6,24 @@ c = Checkboard()
 
 class Game:
     def __init__(self):
-        self.__turn = True
-        self.__finish = False
+        self.__game = True
 
     @property
-    def turn(self):
-        return self.__turn
-
-    @property
-    def finish(self):
-        return self.__finish
+    def game(self):
+        return self.__game
+    def finished(self):
+        self.__game = False
 
     def run(self):
         c.drawboard()
         clock = pg.time.Clock()
         img = c.loadpawns()
         clicks = []
-        game = True
-        while game:
+        while self.game:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     self.sauvergarde()
-                    game = False
+                    self.finished()
                 if event.type == pg.MOUSEBUTTONDOWN:
                     click = pg.mouse.get_pos()
                     row = click[0] // c.size
