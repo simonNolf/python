@@ -3,6 +3,7 @@ from Windows import Screen
 
 window = Screen()
 
+
 class Checkboard:
     def __init__(self):
         self.__pictures = ["wp", "bp", "wc", "bc"]
@@ -94,46 +95,61 @@ class Checkboard:
         target = str(self.board[x2][y2])
         inter = ''
 
+        print("posxy: ", init_pawn, target)
+
+        if coorinitial == coorfinale and init_pawn == target:
+            print("Vous devez jouer votre pion !")
+            return False
+
         if init_pawn == 'wp' and self.turn:
             if y1 != len(self.board[x1]) - 1 and x1 != len(self.board) - 1 and x2 != len(self.board) - 1:
                 inter = str(self.board[x2 - 1][(y1 - 1) if y2 < y1 else (y1 + 1)])
             elif y1 == len(self.board[x1]) - 1:
                 inter = str(self.board[x2 + 1][y1 - 1])
                 self.update_score("blancs", 20)
-
+            elif x1 != len(self.board) - 1:
+                inter = str(self.board[x2 - 1][(y1 - 1) if y2 < y1 else (y1 + 1)])
+                self.update_score("blancs", 20)
 
             if x2 == x1 + 1 and y2 == y1 and target not in ['bp', 'wp']:
                 self.board[x1][y1] = '--'
                 self.board[x2][y2] = init_pawn
+                self.changeturn()
             elif y2 in range(y1 - 3, y1 + 3) and y2 not in [y1 - 1, y1, y1 + 1] and x2 in range(
                     x1 + 3) and x2 not in [x1 - 1, x1, x1 + 1] and target == '--' and inter == 'bp':
                 self.board[x1][y1] = '--'
                 self.board[x2 - 1][(y1 - 1) if y2 < y1 else (y1 + 1)] = '--'
                 self.board[x2][y2] = init_pawn
                 self.update_score("blancs", 20)
-            self.changeturn()
+                self.changeturn()
+            else:
+                return False
 
         elif init_pawn == 'bp' and not self.turn:
-            if y1 != len(self.board[x1]) - 1 and x1 != len(self.board) - 1 and x2 != len(self.board) - 1:
+            if y1 != len(self.board[x1]) - 1 and x2 != len(self.board) - 1:
                 inter = str(self.board[x2 + 1][(y1 - 1) if y2 < y1 else (y1 + 1)])
-            elif y1 == len(self.board[x2]) - 1:
+            elif y1 == len(self.board[x2]) - 1 or x1 != len(self.board) - 1:
                 inter = str(self.board[x2 + 1][y1 - 1])
                 self.update_score("noirs", 20)
 
             if x2 == x1 - 1 and y2 == y1 and target not in ['bp', 'wp']:
                 self.board[x1][y1] = '--'
                 self.board[x2][y2] = init_pawn
+                self.update_score("noirs", 20)
+                self.changeturn()
             elif y2 in range(y1 - 3, y1 + 3) and y2 not in [y1 - 1, y1, y1 + 1] and x2 in range(
                     x1 + 3) and x2 not in [x1 - 1, x1, x1 + 1] and target == '--' and inter == 'wp':
                 self.board[x1][y1] = '--'
                 self.board[x2 + 1][(y1 - 1) if y2 < y1 else (y1 + 1)] = '--'
                 self.board[x2][y2] = init_pawn
                 self.update_score("noirs", 20)
-
-            self.changeturn()
+                self.changeturn()
+            else:
+                return False
 
         else:
             self.warning_message(810, 400)
+
         return self.drawboard()
 
     def countpawns(self):
@@ -172,7 +188,6 @@ class Checkboard:
         self.screen.blit(elim_black, (x, y + 635))
         pg.display.flip()
 
-
     def display_message(self, x, y):
         font = pg.font.Font('StalshineRegular.ttf', 30)
         turn = self.turn
@@ -184,7 +199,6 @@ class Checkboard:
         self.screen.blit(message, (x, y))
         pg.display.flip()
 
-
     def warning_message(self, x, y):
         font = pg.font.Font('StalshineRegular.ttf', 30)
         turn = self.turn
@@ -195,7 +209,6 @@ class Checkboard:
         message = font.render("sélectionnez un pion " + play, True, (255, 0, 0), (0, 0, 0))
         self.screen.blit(message, (x, y))
         pg.display.flip()
-
 
     def colorizesquare(self):
         mousepos = pg.mouse.get_pos()
