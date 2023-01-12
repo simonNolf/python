@@ -7,7 +7,7 @@ window = Screen()
 class Checkboard:
     def __init__(self):
         self.__pictures = ["wp", "bp", "wc", "bc"]
-        self.__colors = [pg.Color("white"), pg.Color("red")]
+        self.__colors = [pg.Color("white"), pg.Color("brown")]
         self.square = 10
         self.__screen = pg.display.set_mode((1200, 800))
         self.__size = window.width // self.square
@@ -107,9 +107,12 @@ class Checkboard:
             elif y1 == len(self.board[x1]) - 1:
                 inter = str(self.board[x2 + 1][y1 - 1])
                 self.update_score("blancs", 20)
+<<<<<<< Updated upstream
             elif x1 != len(self.board) - 1:
                 inter = str(self.board[x2 - 1][(y1 - 1) if y2 < y1 else (y1 + 1)])
                 self.update_score("blancs", 20)
+=======
+>>>>>>> Stashed changes
 
             if x2 == x1 + 1 and y2 == y1 and target not in ['bp', 'wp']:
                 self.board[x1][y1] = '--'
@@ -203,10 +206,10 @@ class Checkboard:
         font = pg.font.Font('StalshineRegular.ttf', 30)
         turn = self.turn
         if turn:
-            play = "blancs"
+            play = "blanc"
         else:
             play = "noir"
-        message = font.render("sélectionnez un pion " + play, True, (255, 0, 0), (0, 0, 0))
+        message = font.render("sélectionnez un pion " + play + "   ", True, (255, 0, 0), (0, 0, 0))
         self.screen.blit(message, (x, y))
         pg.display.flip()
 

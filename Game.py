@@ -11,6 +11,7 @@ class Game:
     @property
     def game(self):
         return self.__game
+
     def finished(self):
         self.__game = False
 
@@ -40,6 +41,7 @@ class Game:
             c.drawstatus(img)
             pg.display.flip()
             clock.tick(15)
+
     def sauvergarde(self):
         file = open("score.txt", "w")
         w = str(c.score["blancs"])

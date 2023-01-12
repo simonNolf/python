@@ -19,10 +19,6 @@ class Screen:
     def height(self):
         return self.__height
 
-    @property
-    def set_screen(self):
-        self.screen.set_mode((self.width, self.height))
-
     def set_name(self, title):
         return self.screen.set_caption(f"{title}")
 
