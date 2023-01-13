@@ -22,5 +22,4 @@ class Screen:
     def set_name(self, title):
         return self.screen.set_caption(f"{title}")
 
-    def set_picture(self, path='pictures/bp.png'):
-        return self.screen.set_icon(pg.image.load(f"{path}"))
+
