@@ -5,7 +5,7 @@ sys.path.append("..")
 from Windows import Screen
 
 
-class Test_Window(unittest.TestCase):
+class TestWindow(unittest.TestCase):
     def test_width(self):
         w = Screen()
         self.assertEqual(w.width, 800)

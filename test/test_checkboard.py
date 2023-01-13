@@ -6,7 +6,7 @@ from Checkboard import Checkboard
 sys.path.append("..")
 
 
-class Test_chackboard(unittest.TestCase):
+class TestCheckboard(unittest.TestCase):
     def test_square(self):
         c = Checkboard()
         self.assertEqual(c.square, 10)
@@ -40,7 +40,7 @@ class Test_chackboard(unittest.TestCase):
     def test_modifyboard(self):
         c = Checkboard()
         c.modifyboard((4, 3), (4, 4))
-        self.assertEqual(c.board,[
+        self.assertEqual(c.board, [
             ["--", "wp", "--", "wp", "--", "wp", "--", "wp", "--", "wp"],
             ["wp", "--", "wp", "--", "wp", "--", "wp", "--", "wp", "--"],
             ["--", "wp", "--", "wp", "--", "wp", "--", "wp", "--", "wp"],
@@ -54,15 +54,14 @@ class Test_chackboard(unittest.TestCase):
         ])
 
     def test_count_pawn(self):
-        c =  Checkboard()
-        self.assertEqual(c.countpawns(), [20,20,0,0])
+        c = Checkboard()
+        self.assertEqual(c.countpawns(), [20, 20, 0, 0])
 
     def test_samepawn(self):
         c = Checkboard()
-        self.assertEqual(c.modifyboard((4,4), (4,4)), False)
+        self.assertEqual(c.modifyboard((4, 4), (4, 4)), False)
 
     def test_diagonale(self):
         c = Checkboard()
-        self.assertEqual(c.modifyboard((4,3), (5,4)), False)
-        self.assertEqual(c.modifyboard((4,3), (3,4)), False)
-
+        self.assertEqual(c.modifyboard((4, 3), (5, 4)), False)
+        self.assertEqual(c.modifyboard((4, 3), (3, 4)), False)

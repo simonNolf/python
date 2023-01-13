@@ -6,16 +6,31 @@ c = Checkboard()
 
 class Game:
     def __init__(self):
+        """
+        set l'état de game a True
+        """
         self.__game = True
 
     @property
     def game(self):
+        """
+
+        :return: renvoie l'état de la variable game
+        """
         return self.__game
 
     def finished(self):
+        """
+
+        :return: met l'état de la variable game a False
+        """
         self.__game = False
 
     def run(self):
+        """
+
+        : return : lance tout le programme principal
+        """
         c.drawboard()
         clock = pg.time.Clock()
         img = c.loadpawns()
@@ -43,6 +58,10 @@ class Game:
             clock.tick(15)
 
     def sauvergarde(self):
+        """
+
+        :return : souvegarde le score dans un fichier text à part
+        """
         file = open("score.txt", "w")
         w = str(c.score["blancs"])
         b = str(c.score["noirs"])
