@@ -3,7 +3,6 @@ from Checkboard import Checkboard
 
 c = Checkboard()
 
-
 class Game:
     def __init__(self):
         """
@@ -60,7 +59,7 @@ class Game:
     def sauvergarde(self):
         """
 
-        :return : souvegarde le score dans un fichier text à part
+        :return : souvegarde le score dans un fichier texte à part
         """
         file = open("score.txt", "w")
         w = str(c.score["blancs"])

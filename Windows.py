@@ -40,4 +40,6 @@ class Screen:
         :param title : titre de la fenêtre
         : return : met le titre à la fenêtre pygame
         """
+        if type(title) != type('test'):
+            raise TypeError
         return self.screen.set_caption(f"{title}")
