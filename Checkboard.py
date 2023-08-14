@@ -17,7 +17,7 @@ class Checkboard:
         Et un board qui est une liste de liste sue lequel le plateau est basé.
 
         """
-        self.__pictures = ["wp", "bp", "wc", "bc"]
+        self.__pictures = ["wp", "bp", "wc", "bca"]
         self.__colors = [pg.Color("white"), pg.Color("brown")]
         self.square = 10
         self.__screen = pg.display.set_mode((1200, 800))
@@ -135,11 +135,22 @@ class Checkboard:
         PRE : contient les images des pions
         POST : dessine les pions aux endroits où ils se trouvent dans board
         """
+
         for i in range(self.square):
-            for j in range(self.square):
-                piece = self.board[j][i]
-                if piece != '--':
-                    self.screen.blit(img[piece], pg.Rect(i * self.size, j * self.size, self.size, self.size))
+            try:
+                for j in range(self.square):
+                    piece = self.board[j][i]
+                    try:
+                        if piece != '--':
+                            self.screen.blit(img[piece], pg.Rect(i * self.size, j * self.size, self.size, self.size))
+                    except TypeError:
+                        print("impossible de dessiné les pions")
+                        font = pg.font.Font('StalshineRegular.ttf', 30)
+                        error = font.render("impossible de dessier le plateau",True,(0,0,0), (255,255,255))
+                        self.screen.blit(error,(810, 300) )
+
+            except FileNotFoundError:
+                print("image non trouvée")
 
     def loadpawns(self):
         """
@@ -148,9 +159,12 @@ class Checkboard:
         POST : charge les images dans pictures
         """
         picture_load = {}
-        for i in self.pictures:
-            picture_load[i] = pg.transform.scale(pg.image.load("pictures/" + i + ".png"), (self.size, self.size))
-        return picture_load
+        try:
+            for i in self.pictures:
+                picture_load[i] = pg.transform.scale(pg.image.load("pictures/" + i + ".png"), (self.size, self.size))
+            return picture_load
+        except FileNotFoundError:
+            print("fichier non trouvé")
 
     def drawstatus(self, img):
         """
@@ -165,7 +179,6 @@ class Checkboard:
         self.display_game_status(810, 50)
         self.display_turn(810, 350)
         self.pawn_to_cheek()
-        print(self.board)
 
     def modifyboard(self, coorinitial, coorfinale):
         """
