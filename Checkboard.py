@@ -17,7 +17,7 @@ class Checkboard:
         Et un board qui est une liste de liste sue lequel le plateau est basé.
 
         """
-        self.__pictures = ["wp", "bp", "wc", "bca"]
+        self.__pictures = ["wp", "bp", "wc", "bc"]
         self.__colors = [pg.Color("white"), pg.Color("brown")]
         self.square = 10
         self.__screen = pg.display.set_mode((1200, 800))
